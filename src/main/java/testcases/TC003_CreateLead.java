@@ -1,8 +1,12 @@
 package testcases;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import pages.ViewLeadPage;
 import wrappers.LeafTapsWrappers;
 
 public class TC003_CreateLead extends LeafTapsWrappers{
@@ -14,7 +18,7 @@ public class TC003_CreateLead extends LeafTapsWrappers{
 		browserName="chrome";
 		dataSheetName="TC003";
 		category="Smoke";
-		authors="Babu";
+		authors="Ananthan";
 	}
 
 	@Test(dataProvider="fetchData")
@@ -34,6 +38,23 @@ public class TC003_CreateLead extends LeafTapsWrappers{
 		.enterPhoneNumberInCL(phoneNo)
 		.clickOnCreateLeadButtonInCL()
 		.verifyFirstname(firstName);
+		
+		ViewLeadPage vp = new ViewLeadPage(driver, test);
+		String lead_id = vp.getLeadID();
+		
+		//to validate the 
+		if (Pattern.matches("[a-zA-Z0-9]+( \\(\\d+\\))*", lead_id)){
+			System.out.println(lead_id +"------ is in correct pattern");
+		}
+		else{
+			System.out.println(lead_id +"------ is in wrong pattern");
+		}
+		
+		
+		Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(lead_id);
+		while(m.find()) {
+			System.out.println("Lead ID is ...."+m.group(1));    
+		}
 
 
 	}

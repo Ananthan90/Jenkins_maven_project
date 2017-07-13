@@ -24,6 +24,11 @@ public class ViewLeadPage extends LeafTapsWrappers {
 		return this;
 
 	}
+	
+	public String getLeadID(){
+		String lead = getTextById("viewLead_companyName_sp");
+		return lead;
+	}
 
 	// method to click delete lead button
 	public MyLeadsPage clickDeleteLead(){
